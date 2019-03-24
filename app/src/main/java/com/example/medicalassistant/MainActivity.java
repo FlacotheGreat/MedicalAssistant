@@ -3,6 +3,7 @@ package com.example.medicalassistant;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -14,6 +15,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+    private FragmentManager fm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +84,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             // Handle the camera action
         } else if (id == R.id.nav_appointments) {
 
+            fm = getSupportFragmentManager();
+            fm.beginTransaction()
+                    .replace(R.id.main_include, new AppointmentFragment())
+                    .addToBackStack(null)
+                    .commit();
+
         } else if (id == R.id.nav_medication) {
+
+            fm = getSupportFragmentManager();
+            fm.beginTransaction()
+                    .replace(R.id.main_include, new MedicationFragment())
+                    .addToBackStack(null)
+                    .commit();
 
         } else if (id == R.id.nav_share) {
 
