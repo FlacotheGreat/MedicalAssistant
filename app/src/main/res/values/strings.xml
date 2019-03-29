@@ -9,4 +9,13 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="take_picture">Take Picture</string>
+    <string name="existing_image">Existing Image</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="emergency_contact_name">Emergency Contact Name</string>
+    <string name="emergency_contact_phone">Emergency Contact Phone</string>
+    <string name="primary_care_physician">Primary Care Physician</string>
+    <string name="primary_care_phone">Primary Care Phone</string>
+    <string name="save">Save</string>
 </resources>
