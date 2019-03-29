@@ -25,13 +25,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-            }
-        });
+        fm = getSupportFragmentManager();
+        fm.beginTransaction()
+                .replace(R.id.main_include, new TopHomeFragment())
+                .addToBackStack(null)
+                .commit();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -81,7 +79,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         if (id == R.id.nav_user) {
-            // Handle the camera action
+            fm = getSupportFragmentManager();
+            fm.beginTransaction()
+                    .replace(R.id.main_include, new TopHomeFragment())
+                    .addToBackStack(null)
+                    .commit();
+
         } else if (id == R.id.nav_appointments) {
 
             fm = getSupportFragmentManager();
