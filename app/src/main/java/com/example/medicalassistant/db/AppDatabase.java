@@ -6,9 +6,10 @@ import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
+import com.example.medicalassistant.db.entities.Medication;
 import com.example.medicalassistant.db.entities.User;
 
-@Database(entities = {User.class}, version = 1, exportSchema = false)
+@Database(entities = {User.class, Medication.class}, version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static AppDatabase instance;
@@ -23,4 +24,5 @@ public abstract class AppDatabase extends RoomDatabase {
     }
 
     public abstract UserDAO userDAO();
+    public abstract MedicationDAO medicationDAO();
 }

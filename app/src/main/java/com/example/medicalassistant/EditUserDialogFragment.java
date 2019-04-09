@@ -1,20 +1,27 @@
 package com.example.medicalassistant;
 
 
-import android.app.Dialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.example.medicalassistant.db.AppDatabase;
 import com.example.medicalassistant.db.entities.User;
+
+
+import static android.app.Activity.RESULT_OK;
 
 
 /**
@@ -24,8 +31,12 @@ public class EditUserDialogFragment extends DialogFragment {
 
     private View root;
     private EditText editFName, editLName, editEContact, editEContactNum, editPhysicianName, editPhysicianNum;
+    private ImageView editUserImage;
     private Button saveButton, existingImageButton, takePictureButton;
-    private User user;
+    private User user = null;
+
+    Uri imageUri;
+    private static final int PICKED_IMAGE = 100;
 
     @Nullable
     @Override
@@ -39,10 +50,11 @@ public class EditUserDialogFragment extends DialogFragment {
         editEContactNum = root.findViewById(R.id.edit_econtactnum);
         editPhysicianName = root.findViewById(R.id.edit_physicianName);
         editPhysicianNum = root.findViewById(R.id.edit_physicianNum);
+        editUserImage = root.findViewById(R.id.medication_image);
 
         saveButton = root.findViewById(R.id.edit_savebutton);
         existingImageButton = root.findViewById(R.id.edit_existingimage);
-        takePictureButton = root.findViewById(R.id.edit_takepicture);
+        takePictureButton = root.findViewById(R.id.medication_takepicture);
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,7 +63,10 @@ public class EditUserDialogFragment extends DialogFragment {
                     @Override
                     public void run() {
 
+                        String image = imageUri.toString();
+
                         if(user != null){
+                            user.setUser_image(image);
                             user.setFname(editFName.getText().toString());
                             user.setLname(editLName.getText().toString());
                             user.seteContactName(editEContact.getText().toString());
@@ -61,12 +76,16 @@ public class EditUserDialogFragment extends DialogFragment {
 
                             AppDatabase.getInstance(getContext()).userDAO().updateUser(user);
                         } else {
+                            user = new User();
+                            user.setUser_image(image);
                             user.setFname(editFName.getText().toString());
                             user.setLname(editLName.getText().toString());
                             user.seteContactName(editEContact.getText().toString());
                             user.seteContactNum(editEContactNum.getText().toString());
                             user.setPhysicianName(editPhysicianName.getText().toString());
                             user.setPhysicianNum(editPhysicianNum.getText().toString());
+
+                            Log.d("TestNewUser", "New user added+" + user.toString());
 
                             AppDatabase.getInstance(getContext()).userDAO().insertUser(user);
                         }
@@ -75,7 +94,71 @@ public class EditUserDialogFragment extends DialogFragment {
             }
         });
 
+        existingImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                openGallery();
+            }
+        });
+
+        takePictureButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openCamera();
+            }
+        });
+
         return root;
     }
 
+    private void openCamera() {
+
+//        Intent takePic = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//        if (takePic.resolveActivity(getActivity().getPackageManager()) ! = null){
+//
+//            File photoFile = null;
+//
+//            try{
+//
+//                photoFile = createPhotoFile();
+//            } catch (Exception e){
+//
+//            }
+//        }
+
+
+    }
+
+//    private File createPhotoFile() {
+//
+//        String name = new SimpleDateFormat("yyyyMMdd_MMmmss").format(new Date());
+//
+//        File storageDir = getExternalStorageDirectory(Environment.DIRECTORY_PICTURES);
+//        File image = null;
+//        try {
+//            image = File.createTempFile(name, ".jpg",storageDir);
+//        } catch (IOException ioe){
+//
+//            Log.d("TestCapture", "Exception thrown" + ioe.toString());
+//        }
+//
+//        return image;
+//    }
+
+    private void openGallery() {
+
+        Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+        startActivityForResult(gallery, PICKED_IMAGE);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode == RESULT_OK && requestCode == PICKED_IMAGE){
+            imageUri = data.getData();
+            editUserImage.setImageURI(imageUri);
+        }
+    }
 }

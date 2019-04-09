@@ -3,12 +3,17 @@ package com.example.medicalassistant.db.entities;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+import android.net.Uri;
 
 @Entity
 public class User {
 
     @PrimaryKey(autoGenerate = true)
     public int unique_id;
+
+    //Stored as a string needs to be parsed out later.
+    @ColumnInfo (name = "user_image")
+    public String user_image;
 
     @ColumnInfo(name = "first_name")
     public String fname;
@@ -27,6 +32,14 @@ public class User {
 
     @ColumnInfo(name = "physician_number")
     public String physicianNum;
+
+    public String getUser_image() {
+        return user_image;
+    }
+
+    public void setUser_image(String user_image) {
+        this.user_image = user_image;
+    }
 
     public String getFname() {
         return fname;
@@ -79,12 +92,13 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "unique_id: " + unique_id +
-                "fname: " + fname +
-                "lname: " + lname +
-                "econtactname: " + eContactName +
-                "econtactnum: " + eContactNum +
-                "physicianName: " + physicianName +
-                "physicianNum: " + physicianNum + "}";
+                " unique_id: " + unique_id +
+                " user_image: " + user_image +
+                " fname: " + fname +
+                " lname: " + lname +
+                " econtactname: " + eContactName +
+                " econtactnum: " + eContactNum +
+                " physicianName: " + physicianName +
+                " physicianNum: " + physicianNum + "}";
     }
 }
