@@ -75,9 +75,13 @@ public class EditUserDialogFragment extends DialogFragment {
                             user.setPhysicianNum(editPhysicianNum.getText().toString());
 
                             AppDatabase.getInstance(getContext()).userDAO().updateUser(user);
+                            Log.d("TestUpdate", "updating contact:" + user.toString());
                         } else {
                             user = new User();
+<<<<<<< Updated upstream
                             user.setUser_image(image);
+=======
+>>>>>>> Stashed changes
                             user.setFname(editFName.getText().toString());
                             user.setLname(editLName.getText().toString());
                             user.seteContactName(editEContact.getText().toString());
@@ -88,6 +92,7 @@ public class EditUserDialogFragment extends DialogFragment {
                             Log.d("TestNewUser", "New user added+" + user.toString());
 
                             AppDatabase.getInstance(getContext()).userDAO().insertUser(user);
+                            Log.d("TestInsert", "Adding unknown contact:" + user.toString());
                         }
                     }
                 }).start();

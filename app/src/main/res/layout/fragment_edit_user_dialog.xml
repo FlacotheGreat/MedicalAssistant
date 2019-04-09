@@ -107,6 +107,7 @@
                 android:id="@+id/edit_econtactnum"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="phone"
                 android:hint="@string/emergency_contact_phone" />
         </android.support.design.widget.TextInputLayout>
 
@@ -139,6 +140,7 @@
                 android:id="@+id/edit_physicianNum"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="phone"
                 android:hint="@string/primary_care_phone" />
         </android.support.design.widget.TextInputLayout>
 
