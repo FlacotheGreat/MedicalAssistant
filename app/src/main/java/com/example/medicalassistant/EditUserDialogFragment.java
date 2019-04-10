@@ -78,10 +78,8 @@ public class EditUserDialogFragment extends DialogFragment {
                             Log.d("TestUpdate", "updating contact:" + user.toString());
                         } else {
                             user = new User();
-<<<<<<< Updated upstream
+
                             user.setUser_image(image);
-=======
->>>>>>> Stashed changes
                             user.setFname(editFName.getText().toString());
                             user.setLname(editLName.getText().toString());
                             user.seteContactName(editEContact.getText().toString());

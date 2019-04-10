@@ -7,7 +7,8 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
-public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.ViewHolder> {
+public class MedicationAdapter {
+        /* extends RecyclerView.Adapter<MedicationAdapter.ViewHolder> {
 
     public MedicationAdapter(Context context, List medicationItem){
 
@@ -28,5 +29,5 @@ public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.Vi
     @Override
     public int getItemCount() {
         return 0;
-    }
+    }*/
 }

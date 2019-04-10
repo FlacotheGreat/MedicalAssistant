@@ -1,5 +1,6 @@
 package com.example.medicalassistant;
 
+import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,7 +15,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.support.v4.app.FragmentManager;
+import android.widget.TimePicker;
 
+import com.example.medicalassistant.Fragments.TimePickerFragment;
 import com.example.medicalassistant.db.AppDatabase;
 import com.example.medicalassistant.db.entities.Medication;
 
@@ -22,12 +26,12 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class MedicationDialogFragment extends DialogFragment {
+public class MedicationDialogFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
 
     private View root;
     private TextInputEditText medicationnametxt, dosagetxt,quantitytxt,lastTakentxt,frequencytxt, durationtext;
     private CheckBox dailybox,sundaybox,mondaybox,tuesdaybox,wednesdaybox,thursdaybox,fridaybox,saturdaybox;
-    private Button takepictureButton, savebtn;
+    private Button takepictureButton, savebtn, timebtn;
 
     private Medication medication;
 
@@ -46,6 +50,8 @@ public class MedicationDialogFragment extends DialogFragment {
 
         takepictureButton = root.findViewById(R.id.medication_takepicture);
         savebtn = root.findViewById(R.id.medication_savebutton);
+        timebtn = root.findViewById(R.id.timeButton);
+
 
         dailybox = root.findViewById(R.id.daily_checkbox);
         sundaybox = root.findViewById(R.id.sunday_checkbox);
@@ -103,6 +109,13 @@ public class MedicationDialogFragment extends DialogFragment {
             }
         });
 
+        timebtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragment timepicker = new TimePickerFragment();
+                timepicker.show(getActivity().getSupportFragmentManager(), "time picker");
+            }
+        });
         setHasOptionsMenu(false);
 
         return root;
@@ -121,5 +134,10 @@ public class MedicationDialogFragment extends DialogFragment {
         String formatDate = "hh:mm:ss a";
         DateFormat dateFormat = new SimpleDateFormat(formatDate);
         return dateFormat.format(date);
+    }
+
+    @Override
+    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+
     }
 }
