@@ -1,5 +1,6 @@
 package com.example.medicalassistant.db;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
@@ -24,5 +25,5 @@ public interface MedicationDAO {
     void updateMedication(Medication medication);
 
     @Query("Select * from Medication")
-    List<Medication> getAllMedication();
+    LiveData<List<Medication>> getAllMedication();
 }

@@ -98,14 +98,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_medication) {
 
             fm = getSupportFragmentManager();
-            fm.beginTransaction()
-                    .replace(R.id.main_include, new MedicationFragment())
-                    .addToBackStack(null)
-                    .commit();
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
+            fm.beginTransaction().replace(R.id.main_include, new MedicationFragment()).addToBackStack(null).commit();
 
         }
 

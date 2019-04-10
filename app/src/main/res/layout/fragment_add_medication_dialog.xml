@@ -98,6 +98,7 @@
             android:id="@+id/medication_last_taken"
             android:layout_width="197dp"
             android:layout_height="wrap_content"
+            android:enabled="true"
             android:hint="Time last taken"
             android:inputType="datetime|time" />
 

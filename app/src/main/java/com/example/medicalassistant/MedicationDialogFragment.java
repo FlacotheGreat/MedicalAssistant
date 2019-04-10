@@ -33,6 +33,7 @@ public class MedicationDialogFragment extends DialogFragment implements TimePick
     private CheckBox dailybox,sundaybox,mondaybox,tuesdaybox,wednesdaybox,thursdaybox,fridaybox,saturdaybox;
     private Button takepictureButton, savebtn, timebtn;
 
+    private String timeOfDay;
     private Medication medication;
 
     @Nullable
@@ -114,6 +115,7 @@ public class MedicationDialogFragment extends DialogFragment implements TimePick
             public void onClick(View v) {
                 DialogFragment timepicker = new TimePickerFragment();
                 timepicker.show(getActivity().getSupportFragmentManager(), "time picker");
+                Log.d("TestSetTime","setting text to" +timeOfDay);
             }
         });
         setHasOptionsMenu(false);
@@ -136,8 +138,15 @@ public class MedicationDialogFragment extends DialogFragment implements TimePick
         return dateFormat.format(date);
     }
 
+    private String setTimeOfday(String time){
+        Log.d("TestSetTime", time);
+        return timeOfDay = time;
+    }
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+
+        lastTakentxt = (TextInputEditText) getActivity().findViewById(R.id.medication_last_taken);
+        lastTakentxt.setText(hourOfDay+":"+minute);
 
     }
 }
