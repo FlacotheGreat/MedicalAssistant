@@ -48,6 +48,14 @@ public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.Vi
         return medications.size();
     }
 
+    public void addItems(List<Medication> medications) {
+
+        this.medications.clear();
+        this.medications.addAll(medications);
+        notifyDataSetChanged();
+
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView tvName,tvDosage,tvDescription;
         public Medication medication;

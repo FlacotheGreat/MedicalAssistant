@@ -8,12 +8,15 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.medicalassistant.Fragments.AppointmentFragment;
+import com.example.medicalassistant.Fragments.MedicationListFragment;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
+                                                               MedicationFragment.OnDayClicked {
 
     private FragmentManager fm;
 
@@ -105,5 +108,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void getMedsForDay(String day) {
+
+        Log.d("Testlayout", "Made it to main with:" + day);
+        MedicationListFragment medicationListFragment = new MedicationListFragment();
+        medicationListFragment.getDay(day);
+
+        fm.beginTransaction()
+                .replace(R.id.main_include, medicationListFragment)
+                .addToBackStack(null)
+                .commit();
+
     }
 }

@@ -41,6 +41,13 @@ public class MedicationDialogFragment extends DialogFragment implements TimePick
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         root = inflater.inflate(R.layout.fragment_add_medication_dialog, container, false);
+        setHasOptionsMenu(false);
+
+        return root;
+    }
+
+    @Override
+    public void onResume() {
 
         medicationnametxt = root.findViewById(R.id.medication_name);
         dosagetxt = root.findViewById(R.id.medication_dosage);
@@ -110,6 +117,8 @@ public class MedicationDialogFragment extends DialogFragment implements TimePick
             }
         });
 
+
+
         timebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -118,9 +127,7 @@ public class MedicationDialogFragment extends DialogFragment implements TimePick
                 Log.d("TestSetTime","setting text to" +timeOfDay);
             }
         });
-        setHasOptionsMenu(false);
-
-        return root;
+        super.onResume();
     }
 
     @Override
@@ -142,6 +149,7 @@ public class MedicationDialogFragment extends DialogFragment implements TimePick
         Log.d("TestSetTime", time);
         return timeOfDay = time;
     }
+
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 
