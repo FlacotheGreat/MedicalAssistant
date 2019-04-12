@@ -73,7 +73,6 @@ public class MedicationFragment extends Fragment {
 
                 fm.beginTransaction()
                         .replace(R.id.main_include, new MedicationDialogFragment())
-                        .addToBackStack(null)
                         .commit();
             }
         });

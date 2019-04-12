@@ -197,6 +197,8 @@ public class Medication {
                 " dosage: " + dosage +
                 " time: " + time +
                 " last_taken: " + last_taken +
-                " taken: " + taken + " }";
+                " taken: " + taken +
+                " daily: " + daily +
+                " Sunday: " + Sunday + " }";
     }
 }

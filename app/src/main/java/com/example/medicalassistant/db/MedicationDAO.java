@@ -24,6 +24,9 @@ public interface MedicationDAO {
     @Update
     void updateMedication(Medication medication);
 
-    @Query("Select * from Medication")
+    @Query("Select * from Medication Where Sunday = 1")
     LiveData<List<Medication>> getAllMedication();
+
+    @Query("Select * from Medication Where daily = 1")
+    LiveData<List<Medication>> getCurrentDayMedication();
 }

@@ -22,10 +22,11 @@ public class MedicationViewModel extends ViewModel {
         return medicationList = AppDatabase.getInstance(c).medicationDAO().getAllMedication();
     }
 
-    public LiveData<List<Medication>> getDailyMedicationList(Context c) {
+    public LiveData<List<Medication>> getDailyMedicationList(Context c, String day) {
 
-
-
-        return medicationList;
+        if( medicationList != null) {
+            return medicationList;
+        }
+        return medicationList = AppDatabase.getInstance(c).medicationDAO().getCurrentDayMedication();
     }
 }

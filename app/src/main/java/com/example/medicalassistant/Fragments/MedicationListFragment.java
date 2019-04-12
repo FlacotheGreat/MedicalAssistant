@@ -1,6 +1,7 @@
 package com.example.medicalassistant.Fragments;
 
 
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
@@ -17,6 +18,7 @@ import android.view.ViewGroup;
 import com.example.medicalassistant.Adapter.MedicationAdapter;
 import com.example.medicalassistant.MedicationViewModel;
 import com.example.medicalassistant.R;
+import com.example.medicalassistant.db.AppDatabase;
 import com.example.medicalassistant.db.entities.Medication;
 
 import java.util.ArrayList;
@@ -55,7 +57,7 @@ public class MedicationListFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        Context context = getContext();
+        final Context context = getContext();
         adapter = new MedicationAdapter(new ArrayList<Medication>());
 
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
@@ -67,12 +69,11 @@ public class MedicationListFragment extends Fragment {
         //Handles data that is passed between events
         ViewModelProviders.of(this)
                 .get(MedicationViewModel.class)
-                .getMedicationList(context)
+                .getDailyMedicationList(context,day)
                 .observe(this, new Observer<List<Medication>>() {
                     @Override
                     public void onChanged(@Nullable List<Medication> medications) {
                         if(medications != null){
-
                             adapter.addItems(medications);
                         }
                     }

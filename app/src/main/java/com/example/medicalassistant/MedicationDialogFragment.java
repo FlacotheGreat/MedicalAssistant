@@ -115,7 +115,10 @@ public class MedicationDialogFragment extends DialogFragment implements TimePick
                         Log.d("TestMedicationDB","Database Contains:" +AppDatabase.getInstance(getContext()).medicationDAO().getAllMedication().toString());
                     }
                 }).start();
+
+                dismiss();
             }
+
         });
 
 
