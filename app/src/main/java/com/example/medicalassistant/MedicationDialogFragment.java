@@ -22,6 +22,7 @@ import com.example.medicalassistant.Fragments.TimePickerFragment;
 import com.example.medicalassistant.db.AppDatabase;
 import com.example.medicalassistant.db.entities.Medication;
 
+import java.sql.Time;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -122,7 +123,8 @@ public class MedicationDialogFragment extends DialogFragment implements TimePick
         timebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment timepicker = new TimePickerFragment();
+                TimePickerFragment timepicker = new TimePickerFragment();
+                timepicker.setListener(MedicationDialogFragment.this);
                 timepicker.show(getActivity().getSupportFragmentManager(), "time picker");
                 Log.d("TestSetTime","setting text to" +timeOfDay);
             }
@@ -153,7 +155,7 @@ public class MedicationDialogFragment extends DialogFragment implements TimePick
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 
-        lastTakentxt = (TextInputEditText) getActivity().findViewById(R.id.medication_last_taken);
+        //lastTakentxt = (TextInputEditText) getView().findViewById(R.id.medication_last_taken);
         lastTakentxt.setText(hourOfDay+":"+minute);
 
     }

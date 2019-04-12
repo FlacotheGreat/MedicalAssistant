@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.text.format.DateFormat;
+import android.view.View;
 
 import com.example.medicalassistant.MedicationDialogFragment;
 import com.example.medicalassistant.R;
@@ -21,6 +22,8 @@ import java.util.Calendar;
 public class TimePickerFragment extends DialogFragment {
 
 
+    private TimePickerDialog.OnTimeSetListener listener;
+
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
@@ -28,9 +31,16 @@ public class TimePickerFragment extends DialogFragment {
         int hour = c.get(Calendar.HOUR_OF_DAY);
         int minute = c.get(Calendar.MINUTE);
 
-        return new TimePickerDialog(getActivity(),2, (TimePickerDialog.OnTimeSetListener) new MedicationDialogFragment(),hour,minute, DateFormat.is24HourFormat(getActivity()));
+        return new TimePickerDialog(getActivity(),2, listener
+                ,hour,minute, DateFormat.is24HourFormat(getActivity()));
     }
 
 
+    public void setListener(TimePickerDialog.OnTimeSetListener listener) {
+        this.listener = listener;
+    }
 
+    public TimePickerDialog.OnTimeSetListener getListener() {
+        return listener;
+    }
 }
