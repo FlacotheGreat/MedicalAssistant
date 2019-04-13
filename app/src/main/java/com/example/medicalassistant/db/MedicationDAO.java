@@ -27,6 +27,27 @@ public interface MedicationDAO {
     @Query("Select * from Medication Where Sunday = 1")
     LiveData<List<Medication>> getAllMedication();
 
-    @Query("Select * from Medication Where daily = 1")
-    LiveData<List<Medication>> getCurrentDayMedication();
+    @Query("Select * from Medication Where daily = 1 OR :day = 1")
+    LiveData<List<Medication>> getCurrentDayMedication(String day);
+
+    @Query("Select * from Medication Where Sunday = 1")
+    LiveData<List<Medication>> getSundayMedication();
+
+    @Query("Select * from Medication Where Monday = 1")
+    LiveData<List<Medication>> getMondayMedication();
+
+    @Query("Select * from Medication Where Tuesday = 1")
+    LiveData<List<Medication>> getTuesdayMedication();
+
+    @Query("Select * from Medication Where Wednesday = 1")
+    LiveData<List<Medication>> getWednesdayMedication();
+
+    @Query("Select * from Medication Where Thursday = 1")
+    LiveData<List<Medication>> getThursdayMedication();
+
+    @Query("Select * from Medication Where Friday = 1")
+    LiveData<List<Medication>> getFridayMedication();
+
+    @Query("Select * from Medication Where Saturday = 1")
+    LiveData<List<Medication>> getSaturdayMedication();
 }

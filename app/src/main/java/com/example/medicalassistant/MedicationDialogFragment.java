@@ -87,6 +87,7 @@ public class MedicationDialogFragment extends DialogFragment implements TimePick
                 medication.setDuration(durationtext.getText().toString());
 
                 if(dailybox.isChecked()){
+                    medication.setDaily(true);
                     medication.setSunday(true);
                     medication.setMonday(true);
                     medication.setTuesday(true);
@@ -94,7 +95,9 @@ public class MedicationDialogFragment extends DialogFragment implements TimePick
                     medication.setThursday(true);
                     medication.setFriday(true);
                     medication.setSaturday(true);
-                } else {
+                } else if(!dailybox.isChecked()) {
+                    Log.d("TestCheckBoxes","ReportCheckBoxes: " + String.valueOf(saturdaybox.isChecked()) + " "
+                                                                        + String.valueOf(sundaybox.isChecked()));
                     medication.setSaturday(saturdaybox.isChecked());
                     medication.setFriday(fridaybox.isChecked());
                     medication.setThursday(thursdaybox.isChecked());
@@ -102,6 +105,7 @@ public class MedicationDialogFragment extends DialogFragment implements TimePick
                     medication.setTuesday(tuesdaybox.isChecked());
                     medication.setMonday(mondaybox.isChecked());
                     medication.setSunday(sundaybox.isChecked());
+
                 }
 
                 new Thread(new Runnable() {

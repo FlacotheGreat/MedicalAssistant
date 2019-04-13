@@ -67,18 +67,19 @@ public class MedicationListFragment extends Fragment {
 
         Log.d("TestLayoutPressed", "Day received:" + day);
         //Handles data that is passed between events
-        ViewModelProviders.of(this)
-                .get(MedicationViewModel.class)
-                .getDailyMedicationList(context,day)
-                .observe(this, new Observer<List<Medication>>() {
-                    @Override
-                    public void onChanged(@Nullable List<Medication> medications) {
-                        if(medications != null){
-                            adapter.addItems(medications);
+
+            ViewModelProviders.of(this)
+                    .get(MedicationViewModel.class)
+                    .getDailyMedicationList(context,day)
+                    .observe(this, new Observer<List<Medication>>() {
+                        @Override
+                        public void onChanged(@Nullable List<Medication> medications) {
+                            if (medications != null) {
+                                adapter.addItems(medications);
+                            }
                         }
-                    }
-                });
-    }
+                    });
+        }
 
     public void getDay(String day){
         this.day = day;

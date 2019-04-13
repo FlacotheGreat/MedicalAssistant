@@ -27,6 +27,23 @@ public class MedicationViewModel extends ViewModel {
         if( medicationList != null) {
             return medicationList;
         }
-        return medicationList = AppDatabase.getInstance(c).medicationDAO().getCurrentDayMedication();
+
+        if(day == "Sunday") {
+            return medicationList = AppDatabase.getInstance(c).medicationDAO().getSundayMedication();
+        } else if( day == "Monday") {
+            return medicationList = AppDatabase.getInstance(c).medicationDAO().getMondayMedication();
+        } else if( day == "Tuesday") {
+            return medicationList = AppDatabase.getInstance(c).medicationDAO().getTuesdayMedication();
+        } else if( day == "Wednesday") {
+            return medicationList = AppDatabase.getInstance(c).medicationDAO().getWednesdayMedication();
+        } else if( day == "Thursday") {
+            return medicationList = AppDatabase.getInstance(c).medicationDAO().getThursdayMedication();
+        } else if( day == "Friday") {
+            return medicationList = AppDatabase.getInstance(c).medicationDAO().getFridayMedication();
+        } else if( day == "Saturday") {
+            return medicationList = AppDatabase.getInstance(c).medicationDAO().getSaturdayMedication();
+        }
+
+        return medicationList = AppDatabase.getInstance(c).medicationDAO().getCurrentDayMedication(day);
     }
 }

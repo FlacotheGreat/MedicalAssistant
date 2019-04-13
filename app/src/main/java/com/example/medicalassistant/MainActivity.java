@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fm = getSupportFragmentManager();
         fm.beginTransaction()
                 .replace(R.id.main_include, new TopHomeFragment())
-                .addToBackStack(null)
+                .replace(R.id.main_include, new MedicationListFragment())
                 .commit();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
