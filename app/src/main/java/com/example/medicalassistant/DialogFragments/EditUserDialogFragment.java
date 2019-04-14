@@ -1,6 +1,7 @@
-package com.example.medicalassistant;
+package com.example.medicalassistant.DialogFragments;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.example.medicalassistant.R;
 import com.example.medicalassistant.db.AppDatabase;
 import com.example.medicalassistant.db.entities.User;
 
@@ -34,9 +36,28 @@ public class EditUserDialogFragment extends DialogFragment {
     private ImageView editUserImage;
     private Button saveButton, existingImageButton, takePictureButton;
     private User user = null;
+    private returnuser mCallback;
 
     Uri imageUri;
     private static final int PICKED_IMAGE = 100;
+
+    public interface returnuser{
+
+        void returnUser(User user);
+
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        try{
+
+            mCallback = (returnuser) activity;
+        } catch (ClassCastException ccs){
+            Log.e("ClassCastException", "Must implement returnuser" + ccs.toString());
+        }
+    }
 
     @Nullable
     @Override
@@ -59,6 +80,8 @@ public class EditUserDialogFragment extends DialogFragment {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -74,6 +97,7 @@ public class EditUserDialogFragment extends DialogFragment {
                             user.setPhysicianName(editPhysicianName.getText().toString());
                             user.setPhysicianNum(editPhysicianNum.getText().toString());
 
+                            mCallback.returnUser(user);
                             AppDatabase.getInstance(getContext()).userDAO().updateUser(user);
                             Log.d("TestUpdate", "updating contact:" + user.toString());
                         } else {
@@ -89,11 +113,14 @@ public class EditUserDialogFragment extends DialogFragment {
 
                             Log.d("TestNewUser", "New user added+" + user.toString());
 
+                            mCallback.returnUser(user);
                             AppDatabase.getInstance(getContext()).userDAO().insertUser(user);
                             Log.d("TestInsert", "Adding unknown contact:" + user.toString());
                         }
                     }
                 }).start();
+
+                dismiss();
             }
         });
 

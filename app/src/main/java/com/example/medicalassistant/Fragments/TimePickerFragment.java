@@ -9,10 +9,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.text.format.DateFormat;
-import android.view.View;
-
-import com.example.medicalassistant.MedicationDialogFragment;
-import com.example.medicalassistant.R;
 
 import java.util.Calendar;
 

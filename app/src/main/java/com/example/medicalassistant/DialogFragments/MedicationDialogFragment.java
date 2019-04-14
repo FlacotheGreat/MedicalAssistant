@@ -1,4 +1,4 @@
-package com.example.medicalassistant;
+package com.example.medicalassistant.DialogFragments;
 
 import android.app.TimePickerDialog;
 import android.os.Bundle;
@@ -6,8 +6,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.DialogFragment;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -15,14 +13,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.support.v4.app.FragmentManager;
 import android.widget.TimePicker;
 
 import com.example.medicalassistant.Fragments.TimePickerFragment;
+import com.example.medicalassistant.R;
 import com.example.medicalassistant.db.AppDatabase;
 import com.example.medicalassistant.db.entities.Medication;
 
-import java.sql.Time;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;

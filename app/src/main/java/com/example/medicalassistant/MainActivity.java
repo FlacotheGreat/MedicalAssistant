@@ -1,8 +1,10 @@
 package com.example.medicalassistant;
 
+import android.app.NotificationManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -11,14 +13,24 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.medicalassistant.Fragments.AppointmentFragment;
+import com.example.medicalassistant.DialogFragments.EditUserDialogFragment;
+import com.example.medicalassistant.Fragments.HomeFragment;
+import com.example.medicalassistant.Fragments.MedicationFragment;
 import com.example.medicalassistant.Fragments.MedicationListFragment;
+import com.example.medicalassistant.db.entities.User;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
-                                                               MedicationFragment.OnDayClicked {
-
+                                                               MedicationFragment.OnDayClicked,
+                                                               EditUserDialogFragment.returnuser{
+    public static boolean IS_USER_SET = false;
     private FragmentManager fm;
+    HomeFragment homeFragment;
+    NotificationManager notificationManager;
+
+    int notifID = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,10 +39,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        homeFragment = new HomeFragment();
+
         fm = getSupportFragmentManager();
         fm.beginTransaction()
-                .replace(R.id.main_include, new TopHomeFragment())
-                .replace(R.id.main_include, new MedicationListFragment())
+                .replace(R.id.main_include, homeFragment)
                 .commit();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -86,8 +99,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (id == R.id.nav_user) {
             fm = getSupportFragmentManager();
             fm.beginTransaction()
-                    .replace(R.id.main_include, new TopHomeFragment())
-                    .addToBackStack(null)
+                    .replace(R.id.main_include, homeFragment)
                     .commit();
 
         } else if (id == R.id.nav_appointments) {
@@ -95,13 +107,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             fm = getSupportFragmentManager();
             fm.beginTransaction()
                     .replace(R.id.main_include, new AppointmentFragment())
-                    .addToBackStack(null)
                     .commit();
 
         } else if (id == R.id.nav_medication) {
 
             fm = getSupportFragmentManager();
-            fm.beginTransaction().replace(R.id.main_include, new MedicationFragment()).addToBackStack(null).commit();
+            fm.beginTransaction()
+                    .replace(R.id.main_include, new MedicationFragment())
+                    .addToBackStack(null)
+                    .commit();
 
         }
 
@@ -123,4 +137,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 .commit();
 
     }
+
+    @Override
+    public void returnUser(User user) {
+
+        homeFragment.setUser(user);
+    }
+
+    public void showNotification(View view){
+
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
+                .setContentTitle("Medication Reminder")
+                .setContentText("Don't forget to take your Medication")
+                .setTicker("Medication")
+                .setSmallIcon(R.drawable.ic_nav_pill);
+
+        //Intent moreInfoIntent = new Intent(this, )
+    }
+
 }

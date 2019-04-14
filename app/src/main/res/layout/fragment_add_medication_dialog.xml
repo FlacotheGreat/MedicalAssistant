@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MedicationDialogFragment">
+    tools:context=".DialogFragments.MedicationDialogFragment">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -142,7 +142,7 @@
                     android:id="@+id/medication_frequency"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Frequency" />
+                    android:hint="Times a day" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout

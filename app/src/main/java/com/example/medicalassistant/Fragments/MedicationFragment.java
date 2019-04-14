@@ -1,4 +1,4 @@
-package com.example.medicalassistant;
+package com.example.medicalassistant.Fragments;
 
 
 import android.app.Activity;
@@ -6,15 +6,14 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
-import com.example.medicalassistant.Fragments.MedicationListFragment;
+import com.example.medicalassistant.DialogFragments.MedicationDialogFragment;
+import com.example.medicalassistant.R;
 
 
 /**
@@ -28,7 +27,7 @@ public class MedicationFragment extends Fragment {
             layoutWednesday, layoutThursday, layoutFriday, layoutSaturday;
     private OnDayClicked mCallBack;
 
-    interface OnDayClicked {
+    public interface OnDayClicked {
 
         void getMedsForDay(String day);
 
@@ -73,6 +72,7 @@ public class MedicationFragment extends Fragment {
 
                 fm.beginTransaction()
                         .replace(R.id.main_include, new MedicationDialogFragment())
+                        .addToBackStack(null)
                         .commit();
             }
         });

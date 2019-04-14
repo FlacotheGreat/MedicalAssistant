@@ -18,4 +18,5 @@
     <string name="primary_care_physician">Primary Care Physician</string>
     <string name="primary_care_phone">Primary Care Phone</string>
     <string name="save">Save</string>
+    <string name="create_user">Create User</string>
 </resources>
