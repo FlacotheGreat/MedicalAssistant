@@ -1,9 +1,12 @@
 package com.example.medicalassistant.Fragments;
 
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -21,6 +24,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.medicalassistant.Adapter.MedicationAdapter;
+import com.example.medicalassistant.AlertReceiver;
 import com.example.medicalassistant.DialogFragments.EditUserDialogFragment;
 import com.example.medicalassistant.MedicationViewModel;
 import com.example.medicalassistant.R;
@@ -28,6 +32,7 @@ import com.example.medicalassistant.db.entities.Medication;
 import com.example.medicalassistant.db.entities.User;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 
@@ -39,6 +44,7 @@ public class HomeFragment extends Fragment {
 
     private View root;
     private User user;
+
     private ImageView homeImage;
     private TextView homeFName,homeLName,homeEContactName, homeEContactNumber, homePhyscian;
     private TextView physicianText, eContactText;
@@ -81,6 +87,8 @@ public class HomeFragment extends Fragment {
         homeCreateUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                setAlarm(root);
                 fm.beginTransaction()
                         .replace(R.id.main_include, new EditUserDialogFragment())
                         .addToBackStack(null)
@@ -179,5 +187,19 @@ public class HomeFragment extends Fragment {
     public void setUser(User user) {
 
         this.user = user;
+    }
+
+    private void setAlarm(View view)
+    {
+
+        Log.d("TestSetAlarm","Setting alarm");
+        Long alertTime = new GregorianCalendar().getTimeInMillis()+5*1000;
+        Intent alertIntent = new Intent(getActivity(), AlertReceiver.class);
+
+        AlarmManager alarmManager = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
+
+        alarmManager.set(AlarmManager.RTC_WAKEUP, alertTime,
+                PendingIntent.getBroadcast(getContext(),1,alertIntent,PendingIntent.FLAG_UPDATE_CURRENT));
+
     }
 }

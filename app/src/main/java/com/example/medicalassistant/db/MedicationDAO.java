@@ -24,6 +24,11 @@ public interface MedicationDAO {
     @Update
     void updateMedication(Medication medication);
 
+    @Query("Select * from Medication Where daily = 1 OR :day = 1")
+    List<Medication> getDayMedication(String day);
+
+    /****************LiveData<List<Medication>> Queries*******************/
+
     @Query("Select * from Medication Where Sunday = 1")
     LiveData<List<Medication>> getAllMedication();
 

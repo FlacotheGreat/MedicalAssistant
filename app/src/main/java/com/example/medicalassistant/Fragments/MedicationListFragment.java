@@ -1,7 +1,7 @@
 package com.example.medicalassistant.Fragments;
 
 
-import android.arch.lifecycle.LiveData;
+
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
@@ -18,7 +18,6 @@ import android.view.ViewGroup;
 import com.example.medicalassistant.Adapter.MedicationAdapter;
 import com.example.medicalassistant.MedicationViewModel;
 import com.example.medicalassistant.R;
-import com.example.medicalassistant.db.AppDatabase;
 import com.example.medicalassistant.db.entities.Medication;
 
 import java.util.ArrayList;
