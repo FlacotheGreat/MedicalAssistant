@@ -1,6 +1,10 @@
 package com.example.medicalassistant;
 
+import android.app.AlarmManager;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.design.widget.NavigationView;
@@ -22,13 +26,18 @@ import com.example.medicalassistant.Fragments.MedicationFragment;
 import com.example.medicalassistant.Fragments.MedicationListFragment;
 import com.example.medicalassistant.db.entities.User;
 
+import java.util.Calendar;
+import java.util.concurrent.TimeUnit;
+
+//import androidx.work.PeriodicWorkRequest;
+//import androidx.work.WorkManager;
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
                                                                MedicationFragment.OnDayClicked,
                                                                EditUserDialogFragment.returnuser{
     public static boolean IS_USER_SET = false;
     private FragmentManager fm;
     HomeFragment homeFragment;
-    NotificationManager notificationManager;
 
     int notifID = 1;
 
@@ -54,6 +63,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+//        PeriodicWorkRequest.Builder request = new PeriodicWorkRequest.Builder(MyWorker.class, 1, TimeUnit.MINUTES);
+////
+////        PeriodicWorkRequest work = request.build();
+////        WorkManager.getInstance().enqueue(work);
+
+        runGetDayManager();
+    }
+
+    private void runGetDayManager() {
+
+        Calendar calendar = Calendar.getInstance();
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+        Intent intent = new Intent(this,DateTimeChangeReceiver.class);
+        PendingIntent mAlarmSender = PendingIntent.getService(this,20, intent, 0);
+
+        calendar.set(Calendar.HOUR_OF_DAY, 1);
+        calendar.set(Calendar.MINUTE, 8);
+        calendar.set(Calendar.SECOND, 0);
+
+        alarmManager.setInexactRepeating(AlarmManager.RTC,calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY,mAlarmSender);
     }
 
     @Override

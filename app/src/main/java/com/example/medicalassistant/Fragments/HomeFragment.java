@@ -214,12 +214,12 @@ public class HomeFragment extends Fragment {
     }
 
     private void setDailyAlarms(List<Medication> medications){
-        Long alertTime = new GregorianCalendar().getTime();
-        for(Medication m: medications){
-
-            if(m.getFrequency() == 1
-
-        }
+//        Long alertTime = new GregorianCalendar().getTime();
+//        for(Medication m: medications){
+//
+//            if(m.getFrequency() == 1
+//
+//        }
 
     }
     private void setAlarm(View view)
@@ -228,7 +228,7 @@ public class HomeFragment extends Fragment {
         Log.d("TestSetAlarm","Setting alarm");
         Long alertTime = new GregorianCalendar().getTimeInMillis()+5*1000;
         Intent alertIntent = new Intent(getActivity(), AlertReceiver.class);
-
+            alertIntent.putExtra("User",user.getFname());
         AlarmManager alarmManager = (AlarmManager) view.getContext().getSystemService(Context.ALARM_SERVICE);
 
         alarmManager.set(AlarmManager.RTC_WAKEUP, alertTime,
