@@ -80,7 +80,7 @@ public class MedicationDialogFragment extends DialogFragment implements TimePick
                 medication.setTime(getTime());
                 medication.setDescription("");
                 medication.setLast_taken(lastTakentxt.getText().toString());
-                medication.setFrequency(frequencytxt.getText().toString());
+                medication.setFrequency(Integer.getInteger(frequencytxt.getText().toString()));
                 medication.setDuration(durationtext.getText().toString());
 
                 if(dailybox.isChecked()){

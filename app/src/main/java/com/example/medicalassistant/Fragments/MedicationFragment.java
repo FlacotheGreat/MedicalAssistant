@@ -70,10 +70,12 @@ public class MedicationFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                fm.beginTransaction()
+                /*fm.beginTransaction()
                         .replace(R.id.main_include, new MedicationDialogFragment())
                         .addToBackStack(null)
-                        .commit();
+                        .commit();*/
+                MedicationDialogFragment mdf = new MedicationDialogFragment();
+                mdf.show(fm, "med frag");
             }
         });
 

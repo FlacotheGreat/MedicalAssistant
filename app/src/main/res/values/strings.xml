@@ -19,4 +19,6 @@
     <string name="primary_care_phone">Primary Care Phone</string>
     <string name="save">Save</string>
     <string name="create_user">Create User</string>
+    <string name="channel_name">Set Alarm</string>
+    <string name="channel_description">Set medication alarm</string>
 </resources>

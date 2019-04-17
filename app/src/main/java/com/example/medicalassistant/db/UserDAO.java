@@ -22,4 +22,7 @@ public interface UserDAO {
 
     @Query("Select * from User Where unique_id LIKE :unique_id")
     User userExist(int unique_id);
+
+    @Query("Select * from User where isCurrent = 1")
+    User getCurrentUser();
 }

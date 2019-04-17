@@ -33,6 +33,12 @@ public class User {
     @ColumnInfo(name = "physician_number")
     public String physicianNum;
 
+    public boolean isCurrent;
+
+    public boolean isCurrent() { return isCurrent; }
+
+    public void setCurrent(boolean current) { isCurrent = current; }
+
     public String getUser_image() {
         return user_image;
     }

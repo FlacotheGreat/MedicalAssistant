@@ -11,7 +11,7 @@ public class Medication {
 
     public String medication_Name;
 
-    public String frequency;
+    public int frequency;
 
     public String dosage;
 
@@ -52,11 +52,11 @@ public class Medication {
     public void setMedication_Name(String medication_Name) {
         this.medication_Name = medication_Name; }
 
-    public String getFrequency() {
+    public int getFrequency() {
         return frequency;
     }
 
-    public void setFrequency(String frequency) {
+    public void setFrequency(int frequency) {
         this.frequency = frequency;
     }
 

@@ -2,16 +2,20 @@ package com.example.medicalassistant.Fragments;
 
 
 import android.app.AlarmManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -23,11 +27,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.medicalassistant.Adapter.HomeMedicationAdapter;
 import com.example.medicalassistant.Adapter.MedicationAdapter;
 import com.example.medicalassistant.AlertReceiver;
 import com.example.medicalassistant.DialogFragments.EditUserDialogFragment;
 import com.example.medicalassistant.MedicationViewModel;
 import com.example.medicalassistant.R;
+import com.example.medicalassistant.db.AppDatabase;
 import com.example.medicalassistant.db.entities.Medication;
 import com.example.medicalassistant.db.entities.User;
 import java.util.ArrayList;
@@ -35,6 +42,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import static android.app.Notification.EXTRA_NOTIFICATION_ID;
 
 
 /**
@@ -50,9 +58,11 @@ public class HomeFragment extends Fragment {
     private TextView physicianText, eContactText;
     private Button homeCreateUser;
     private FragmentManager fm;
-    private MedicationAdapter adapter;
+    private HomeMedicationAdapter adapter;
     private RecyclerView homeRecyclerView;
     private String day;
+
+    private Context mContext;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -66,13 +76,15 @@ public class HomeFragment extends Fragment {
 
         fm = getActivity().getSupportFragmentManager();
 
+        mContext = getContext();
+        getCurrentUser();
         return root;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-
+        getCurrentUser();
         homeImage = root.findViewById(R.id.home_user_image);
         homeFName = root.findViewById(R.id.home_first_name);
         homeLName = root.findViewById(R.id.home_last_name);
@@ -126,7 +138,7 @@ public class HomeFragment extends Fragment {
 
 
         final Context context = getContext();
-        adapter = new MedicationAdapter(new ArrayList<Medication>());
+        adapter = new HomeMedicationAdapter(new ArrayList<Medication>());
 
         homeRecyclerView.setLayoutManager(new LinearLayoutManager(context));
 
@@ -144,10 +156,10 @@ public class HomeFragment extends Fragment {
                     public void onChanged(@Nullable List<Medication> medications) {
                         if (medications != null) {
                             adapter.addItems(medications);
+                            setDailyAlarms(medications);
                         }
                     }
                 });
-
     }
 
     @Override
@@ -189,6 +201,27 @@ public class HomeFragment extends Fragment {
         this.user = user;
     }
 
+    private void getCurrentUser() {
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if(AppDatabase.getInstance(getContext()).userDAO().getCurrentUser() != null){
+                     setUser(AppDatabase.getInstance(getContext()).userDAO().getCurrentUser());
+                }
+            }
+        }).start();
+    }
+
+    private void setDailyAlarms(List<Medication> medications){
+        Long alertTime = new GregorianCalendar().getTime();
+        for(Medication m: medications){
+
+            if(m.getFrequency() == 1
+
+        }
+
+    }
     private void setAlarm(View view)
     {
 
@@ -196,10 +229,11 @@ public class HomeFragment extends Fragment {
         Long alertTime = new GregorianCalendar().getTimeInMillis()+5*1000;
         Intent alertIntent = new Intent(getActivity(), AlertReceiver.class);
 
-        AlarmManager alarmManager = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
+        AlarmManager alarmManager = (AlarmManager) view.getContext().getSystemService(Context.ALARM_SERVICE);
 
         alarmManager.set(AlarmManager.RTC_WAKEUP, alertTime,
-                PendingIntent.getBroadcast(getContext(),1,alertIntent,PendingIntent.FLAG_UPDATE_CURRENT));
+                PendingIntent.getBroadcast(view.getContext(),1,alertIntent,PendingIntent.FLAG_UPDATE_CURRENT));
 
     }
+
 }

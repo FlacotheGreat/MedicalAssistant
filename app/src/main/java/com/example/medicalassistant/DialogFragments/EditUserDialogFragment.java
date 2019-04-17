@@ -3,13 +3,17 @@ package com.example.medicalassistant.DialogFragments;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +27,13 @@ import com.example.medicalassistant.db.AppDatabase;
 import com.example.medicalassistant.db.entities.User;
 
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import static android.app.Activity.RESULT_OK;
+import static android.os.Environment.getExternalStoragePublicDirectory;
 
 
 /**
@@ -37,9 +47,12 @@ public class EditUserDialogFragment extends DialogFragment {
     private Button saveButton, existingImageButton, takePictureButton;
     private User user = null;
     private returnuser mCallback;
+    String pathToFile;
 
     Uri imageUri;
     private static final int PICKED_IMAGE = 100;
+    static final int REQUEST_IMAGE_CAPTURE = 1;
+
 
     public interface returnuser{
 
@@ -110,6 +123,7 @@ public class EditUserDialogFragment extends DialogFragment {
                             user.seteContactNum(editEContactNum.getText().toString());
                             user.setPhysicianName(editPhysicianName.getText().toString());
                             user.setPhysicianNum(editPhysicianNum.getText().toString());
+                            user.setCurrent(true);
 
                             Log.d("TestNewUser", "New user added+" + user.toString());
 
@@ -135,51 +149,52 @@ public class EditUserDialogFragment extends DialogFragment {
         takePictureButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openCamera();
+                dispatchTakePictureIntent();
             }
         });
 
         return root;
     }
 
-    private void openCamera() {
 
-//        Intent takePic = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//        if (takePic.resolveActivity(getActivity().getPackageManager()) ! = null){
-//
-//            File photoFile = null;
-//
-//            try{
-//
-//                photoFile = createPhotoFile();
-//            } catch (Exception e){
-//
-//            }
-//        }
+    private File createPhotoFile() {
 
+        String name = new SimpleDateFormat("yyyyMMdd_MMmmss").format(new Date());
 
+        File storageDir = getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        File image = null;
+        try {
+            image = File.createTempFile(name, ".jpg",storageDir);
+        } catch (IOException ioe){
+
+            Log.d("TestCapture", "Exception thrown" + ioe.toString());
+        }
+
+        return image;
     }
-
-//    private File createPhotoFile() {
-//
-//        String name = new SimpleDateFormat("yyyyMMdd_MMmmss").format(new Date());
-//
-//        File storageDir = getExternalStorageDirectory(Environment.DIRECTORY_PICTURES);
-//        File image = null;
-//        try {
-//            image = File.createTempFile(name, ".jpg",storageDir);
-//        } catch (IOException ioe){
-//
-//            Log.d("TestCapture", "Exception thrown" + ioe.toString());
-//        }
-//
-//        return image;
-//    }
 
     private void openGallery() {
 
         Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
         startActivityForResult(gallery, PICKED_IMAGE);
+    }
+
+    private void dispatchTakePictureIntent() {
+
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+
+            File photoFile = null;
+            photoFile = createPhotoFile();
+
+            if(photoFile != null){
+                pathToFile =photoFile.getAbsolutePath();
+                Uri photoUri = FileProvider.getUriForFile(getContext(),"com.example.medicalassistant",photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,photoUri);
+                imageUri = photoUri;
+                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+            }
+        }
     }
 
     @Override
@@ -188,7 +203,10 @@ public class EditUserDialogFragment extends DialogFragment {
 
         if(resultCode == RESULT_OK && requestCode == PICKED_IMAGE){
             imageUri = data.getData();
+            //editUserImage.setImageURI(imageUri);
+        } else if(resultCode == RESULT_OK && requestCode == REQUEST_IMAGE_CAPTURE){
             editUserImage.setImageURI(imageUri);
         }
     }
+
 }
