@@ -1,16 +1,21 @@
 package com.example.medicalassistant.DialogFragments;
 
+import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.DialogFragment;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TimePicker;
@@ -39,7 +44,16 @@ public class MedicationDialogFragment extends DialogFragment implements TimePick
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         root = inflater.inflate(R.layout.fragment_add_medication_dialog, container, false);
+        Toolbar toolbar = (Toolbar) root.findViewById(R.id.toolbar);
         setHasOptionsMenu(false);
+
+        ActionBar actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
+        if(actionBar != null)
+        {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeButtonEnabled(true);
+            actionBar.setHomeAsUpIndicator(android.R.drawable.ic_menu_close_clear_cancel);
+        }
 
         return root;
     }
@@ -136,11 +150,12 @@ public class MedicationDialogFragment extends DialogFragment implements TimePick
         super.onResume();
     }
 
+    @NonNull
     @Override
-    public void onPrepareOptionsMenu(Menu menu) {
-        menu.clear();
-
-        setHasOptionsMenu(false);
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        Dialog dialog = super.onCreateDialog(savedInstanceState);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        return dialog;
     }
 
     public static String getTime(){
