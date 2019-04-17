@@ -10,7 +10,6 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -42,8 +41,9 @@ public class MedicationDialogFragment extends DialogFragment implements TimePick
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         root = inflater.inflate(R.layout.fragment_add_medication_dialog, container, false);
-        Toolbar toolbar = root.findViewById(R.id.toolbar);
-        toolbar.setNavigationIcon(R.drawable.ic_menu_user);
+        Toolbar toolbar = root.findViewById(R.id.medicationToolbar);
+        toolbar.setNavigationIcon(R.drawable.ic_close_black_24dp);
+        toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -103,7 +103,7 @@ public class MedicationDialogFragment extends DialogFragment implements TimePick
                 medication.setTime(getTime());
                 medication.setDescription("");
                 medication.setLast_taken(lastTakentxt.getText().toString());
-                medication.setFrequency(Integer.getInteger(frequencytxt.getText().toString()));
+                medication.setFrequency(Integer.parseInt(frequencytxt.getText().toString()));
                 medication.setDuration(durationtext.getText().toString());
 
                 if(dailybox.isChecked()){
