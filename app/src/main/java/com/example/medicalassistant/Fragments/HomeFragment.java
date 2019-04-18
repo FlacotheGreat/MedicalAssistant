@@ -103,11 +103,11 @@ public class HomeFragment extends Fragment {
             public void onClick(View view) {
 
                 EditUserDialogFragment editUserDialogFragment= new EditUserDialogFragment();
-//                fm.beginTransaction()
-//                        .replace(R.id.main_include, new EditUserDialogFragment())
-//                        .addToBackStack(null)
-//                        .commit();
-                editUserDialogFragment.show(fm,"ShowDialog");
+                fm.beginTransaction()
+                        .replace(R.id.main_include, editUserDialogFragment)
+                        .addToBackStack(null)
+                        .commit();
+                //editUserDialogFragment.show(fm,"ShowDialog");
             }
         });
 
