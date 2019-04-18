@@ -5,6 +5,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.design.widget.NavigationView;
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public static boolean IS_USER_SET = false;
     private FragmentManager fm;
     HomeFragment homeFragment;
+    DateTimeChangeReceiver receiver;
 
     int notifID = 1;
 
@@ -68,6 +70,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 ////        PeriodicWorkRequest work = request.build();
 ////        WorkManager.getInstance().enqueue(work);
 
+        receiver = new DateTimeChangeReceiver();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(Intent.ACTION_TIME_CHANGED);
+        intentFilter.addAction(Intent.ACTION_TIMEZONE_CHANGED);
+        intentFilter.addAction(Intent.ACTION_DATE_CHANGED);
+        intentFilter.addAction(Intent.ACTION_AIRPLANE_MODE_CHANGED);
+        registerReceiver(receiver,intentFilter);
         runGetDayManager();
     }
 
@@ -76,11 +85,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Calendar calendar = Calendar.getInstance();
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
-        Intent intent = new Intent(this,DateTimeChangeReceiver.class);
+        Intent intent = new Intent(this,AlertReceiver.class);
         PendingIntent mAlarmSender = PendingIntent.getService(this,20, intent, 0);
 
-        calendar.set(Calendar.HOUR_OF_DAY, 1);
-        calendar.set(Calendar.MINUTE, 8);
+        calendar.set(Calendar.HOUR_OF_DAY, 16);
+        calendar.set(Calendar.MINUTE, 55);
         calendar.set(Calendar.SECOND, 0);
 
         alarmManager.setInexactRepeating(AlarmManager.RTC,calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY,mAlarmSender);
@@ -173,16 +182,4 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         homeFragment.setUser(user);
     }
-
-    public void showNotification(View view){
-
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setContentTitle("Medication Reminder")
-                .setContentText("Don't forget to take your Medication")
-                .setTicker("Medication")
-                .setSmallIcon(R.drawable.ic_nav_pill);
-
-        //Intent moreInfoIntent = new Intent(this, )
-    }
-
 }
