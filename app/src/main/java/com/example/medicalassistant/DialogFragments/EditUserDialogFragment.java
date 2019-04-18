@@ -3,8 +3,6 @@ package com.example.medicalassistant.DialogFragments;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -14,6 +12,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.FileProvider;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -77,6 +76,30 @@ public class EditUserDialogFragment extends DialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater,@Nullable ViewGroup container,@Nullable Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         root = inflater.inflate(R.layout.fragment_edit_user_dialog, container, false);
+
+        Toolbar toolbar = root.findViewById(R.id.Usertoolbar);
+        toolbar.setNavigationIcon(R.drawable.ic_close_black_24dp);
+        toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dismiss();
+            }
+        });
+        toolbar.setTitle("Add User");
+
+
+        return root;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
 
         editFName = root.findViewById(R.id.edit_firstname);
         editLName = root.findViewById(R.id.edit_lastname);
@@ -153,9 +176,7 @@ public class EditUserDialogFragment extends DialogFragment {
             }
         });
 
-        return root;
     }
-
 
     private File createPhotoFile() {
 
