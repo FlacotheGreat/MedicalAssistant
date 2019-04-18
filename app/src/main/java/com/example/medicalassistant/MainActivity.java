@@ -85,12 +85,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Calendar calendar = Calendar.getInstance();
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
-        Intent intent = new Intent(this,AlertReceiver.class);
+        Intent intent = new Intent(this,DateTimeChangeReceiver.class);
         PendingIntent mAlarmSender = PendingIntent.getService(this,20, intent, 0);
-
-        calendar.set(Calendar.HOUR_OF_DAY, 16);
-        calendar.set(Calendar.MINUTE, 55);
-        calendar.set(Calendar.SECOND, 0);
 
         alarmManager.setInexactRepeating(AlarmManager.RTC,calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY,mAlarmSender);
     }

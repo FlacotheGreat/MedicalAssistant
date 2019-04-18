@@ -1,7 +1,9 @@
 package com.example.medicalassistant;
 
+import java.util.Calendar;
+
 public class Constants {
 
-    static String DAY;
+    public static String DAY = "";
 
 }

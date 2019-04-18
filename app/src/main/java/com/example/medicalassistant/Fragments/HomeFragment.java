@@ -31,6 +31,7 @@ import android.widget.TextView;
 import com.example.medicalassistant.Adapter.HomeMedicationAdapter;
 import com.example.medicalassistant.Adapter.MedicationAdapter;
 import com.example.medicalassistant.AlertReceiver;
+import com.example.medicalassistant.Constants;
 import com.example.medicalassistant.DialogFragments.EditUserDialogFragment;
 import com.example.medicalassistant.MedicationViewModel;
 import com.example.medicalassistant.R;
@@ -100,7 +101,6 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                setAlarm(root);
                 fm.beginTransaction()
                         .replace(R.id.main_include, new EditUserDialogFragment())
                         .addToBackStack(null)
@@ -150,7 +150,7 @@ public class HomeFragment extends Fragment {
         Log.d("TestHomeFragment", "Day received:" + day);
         ViewModelProviders.of(this)
                 .get(MedicationViewModel.class)
-                .getDailyMedicationList(context,day)
+                .getDailyMedicationList(context, Constants.DAY)
                 .observe(this, new Observer<List<Medication>>() {
                     @Override
                     public void onChanged(@Nullable List<Medication> medications) {
@@ -173,25 +173,25 @@ public class HomeFragment extends Fragment {
 
         switch(day){
             case Calendar.SUNDAY:
-                this.day = "Sunday";
+                Constants.DAY = "Sunday";
                 break;
             case Calendar.MONDAY:
-                this.day = "Monday";
+                Constants.DAY = "Monday";
                 break;
             case Calendar.TUESDAY:
-                this.day = "Tuesday";
+                Constants.DAY = "Tuesday";
                 break;
             case Calendar.WEDNESDAY:
-                this.day = "Wednesday";
+                Constants.DAY = "Wednesday";
                 break;
             case Calendar.THURSDAY:
-                this.day = "Thursday";
+                Constants.DAY = "Thursday";
                 break;
             case Calendar.FRIDAY:
-                this.day = "Friday";
+                Constants.DAY = "Friday";
                 break;
             case Calendar.SATURDAY:
-                this.day = "Saturday";
+                Constants.DAY = "Saturday";
                 break;
         }
     }
@@ -214,23 +214,59 @@ public class HomeFragment extends Fragment {
     }
 
     private void setDailyAlarms(List<Medication> medications){
-//        Long alertTime = new GregorianCalendar().getTime();
-//        for(Medication m: medications){
-//
-//            if(m.getFrequency() == 1
-//
-//        }
+
+        Calendar calendar1 = Calendar.getInstance();
+        Calendar calendar2 = Calendar.getInstance();
+        Calendar Calendar3 = Calendar.getInstance();
+
+
+        for(Medication m: medications) {
+
+            if (m.getFrequency() == 1){
+                Log.d("TestFrequency", "We are looking at frequency as we speak");
+                calendar1.set(Calendar.HOUR, 8);
+                calendar1.set(Calendar.MINUTE,42);
+                calendar1.set(Calendar.SECOND,0);
+
+                setAlarm(root,calendar1);
+
+            } else if (m.getFrequency() == 2) {
+                Log.d("TestFrequency", "We are looking at frequency as we speak");
+
+                calendar1.set(Calendar.HOUR, 8);
+                calendar1.set(Calendar.MINUTE,0);
+                calendar1.set(Calendar.SECOND,0);
+                setAlarm(root,calendar1);
+
+                calendar2.set(Calendar.HOUR, 8);
+                calendar2.set(Calendar.MINUTE,2);
+                calendar2.set(Calendar.SECOND,0);
+
+                setAlarm(root,calendar2);
+            } else if (m.getFrequency() == 3) {
+                Log.d("TestFrequency", "We are looking at frequency as we speak");
+
+
+            }
+
+        }
 
     }
-    private void setAlarm(View view)
+
+
+    private void setAlarm(View view, Calendar c)
     {
 
         Log.d("TestSetAlarm","Setting alarm");
-        Long alertTime = new GregorianCalendar().getTimeInMillis()+5*1000;
+
         Intent alertIntent = new Intent(getActivity(), AlertReceiver.class);
         AlarmManager alarmManager = (AlarmManager) view.getContext().getSystemService(Context.ALARM_SERVICE);
 
-        alarmManager.set(AlarmManager.RTC_WAKEUP, alertTime,
+//        if(c.before(Calendar.getInstance())){
+//            c.add(Calendar.DATE,1);
+//        }
+
+        alarmManager.set(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(),
                 PendingIntent.getBroadcast(view.getContext(),1,alertIntent,PendingIntent.FLAG_UPDATE_CURRENT));
 
     }
