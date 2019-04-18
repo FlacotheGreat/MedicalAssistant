@@ -4,6 +4,6 @@ import java.util.Calendar;
 
 public class Constants {
 
-    public static String DAY = "";
+   public static String DAY;
 
 }
