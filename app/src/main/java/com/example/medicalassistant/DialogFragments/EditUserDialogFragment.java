@@ -224,7 +224,7 @@ public class EditUserDialogFragment extends DialogFragment {
 
         if(resultCode == RESULT_OK && requestCode == PICKED_IMAGE){
             imageUri = data.getData();
-            //editUserImage.setImageURI(imageUri);
+            editUserImage.setImageURI(imageUri);
         } else if(resultCode == RESULT_OK && requestCode == REQUEST_IMAGE_CAPTURE){
             editUserImage.setImageURI(imageUri);
         }
