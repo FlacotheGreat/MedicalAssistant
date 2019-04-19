@@ -103,11 +103,11 @@ public class HomeFragment extends Fragment {
             public void onClick(View view) {
 
                 EditUserDialogFragment editUserDialogFragment= new EditUserDialogFragment();
-                fm.beginTransaction()
-                        .replace(R.id.main_include, editUserDialogFragment)
-                        .addToBackStack(null)
-                        .commit();
-                //editUserDialogFragment.show(fm,"ShowDialog");
+//                fm.beginTransaction()
+//                        .replace(R.id.main_include, editUserDialogFragment);
+//                        .addToBackStack(null)
+//                        .commit();
+                editUserDialogFragment.show(fm,"ShowDialog");
             }
         });
 
@@ -220,7 +220,7 @@ public class HomeFragment extends Fragment {
 
         Calendar calendar1 = Calendar.getInstance();
         Calendar calendar2 = Calendar.getInstance();
-        Calendar Calendar3 = Calendar.getInstance();
+        Calendar calendar3 = Calendar.getInstance();
 
 
         for(Medication m: medications) {
@@ -228,7 +228,7 @@ public class HomeFragment extends Fragment {
             if (m.getFrequency() == 1){
                 Log.d("TestFrequency", "We are looking at frequency as we speak");
                 calendar1.set(Calendar.HOUR, 8);
-                calendar1.set(Calendar.MINUTE,42);
+                calendar1.set(Calendar.MINUTE,0);
                 calendar1.set(Calendar.SECOND,0);
 
                 setAlarm(root,calendar1);
@@ -241,15 +241,28 @@ public class HomeFragment extends Fragment {
                 calendar1.set(Calendar.SECOND,0);
                 setAlarm(root,calendar1);
 
-                calendar2.set(Calendar.HOUR, 8);
-                calendar2.set(Calendar.MINUTE,2);
+                calendar2.set(Calendar.HOUR, 16);
+                calendar2.set(Calendar.MINUTE,0);
                 calendar2.set(Calendar.SECOND,0);
 
                 setAlarm(root,calendar2);
             } else if (m.getFrequency() == 3) {
                 Log.d("TestFrequency", "We are looking at frequency as we speak");
 
+                calendar1.set(Calendar.HOUR, 8);
+                calendar1.set(Calendar.MINUTE,0);
+                calendar1.set(Calendar.SECOND,0);
+                setAlarm(root,calendar1);
 
+                calendar2.set(Calendar.HOUR, 12);
+                calendar2.set(Calendar.MINUTE,0);
+                calendar2.set(Calendar.SECOND,0);
+                setAlarm(root,calendar2);
+
+                calendar3.set(Calendar.HOUR, 16);
+                calendar3.set(Calendar.MINUTE,0);
+                calendar3.set(Calendar.SECOND,0);
+                setAlarm(root,calendar3);
             }
 
         }
