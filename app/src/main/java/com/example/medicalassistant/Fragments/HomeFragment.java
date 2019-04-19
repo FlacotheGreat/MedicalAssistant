@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.SyncStateContract;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -102,11 +103,11 @@ public class HomeFragment extends Fragment {
             public void onClick(View view) {
 
                 EditUserDialogFragment editUserDialogFragment= new EditUserDialogFragment();
-//                fm.beginTransaction()
-//                        .replace(R.id.main_include, new EditUserDialogFragment())
-//                        .addToBackStack(null)
-//                        .commit();
-                editUserDialogFragment.show(fm,"ShowDialog");
+                fm.beginTransaction()
+                        .replace(R.id.main_include, editUserDialogFragment)
+                        .addToBackStack(null)
+                        .commit();
+                //editUserDialogFragment.show(fm,"ShowDialog");
             }
         });
 
