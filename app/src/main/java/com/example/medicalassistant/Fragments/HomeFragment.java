@@ -226,8 +226,8 @@ public class HomeFragment extends Fragment {
 
             if (m.getFrequency() == 1){
                 Log.d("TestFrequency", "We are looking at frequency as we speak");
-                calendar1.set(Calendar.HOUR, 8);
-                calendar1.set(Calendar.MINUTE,42);
+                calendar1.set(Calendar.HOUR, 6);
+                calendar1.set(Calendar.MINUTE,5);
                 calendar1.set(Calendar.SECOND,0);
 
                 setAlarm(root,calendar1);
@@ -235,8 +235,8 @@ public class HomeFragment extends Fragment {
             } else if (m.getFrequency() == 2) {
                 Log.d("TestFrequency", "We are looking at frequency as we speak");
 
-                calendar1.set(Calendar.HOUR, 8);
-                calendar1.set(Calendar.MINUTE,0);
+                calendar1.set(Calendar.HOUR, 6);
+                calendar1.set(Calendar.MINUTE,10);
                 calendar1.set(Calendar.SECOND,0);
                 setAlarm(root,calendar1);
 
